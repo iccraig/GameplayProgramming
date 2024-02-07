@@ -10,6 +10,7 @@ namespace Arcanum
         private GameObject humanoidPrefab;
         private float humanoidID;
         private float humanoidSize;
+        private int antiVirusesTaken;
         [SerializeField] private ParticleSystem explosionParticles;
 
 
@@ -24,6 +25,7 @@ namespace Arcanum
 
         void Awake()
         {
+            this.antiVirusesTaken = 0;
             this.humanoidSize = 1;
         }
 
@@ -59,6 +61,10 @@ namespace Arcanum
         /* This is the explosion when interacting with the virus */
         public void TriggerExplosion()
         {
+            // This human is safe from the virus so halt the funciton
+            if (this.antiVirusesTaken > 0)
+                return;
+
             Debug.Log($"Humanoid {humanoidID} exploded!");
             // Implement explosion effects or destruction logic here
             if (explosionParticles != null)
@@ -70,6 +76,23 @@ namespace Arcanum
             // Change color and then destroy Humanoid
             ChangeColor(explosionColor);
             StartCoroutine(DestroyAfterDelay(4.0f)); // Change 3f to the desired delay in seconds
+        }
+
+        public void InjestAntivirus()
+        {
+            this.antiVirusesTaken++;
+
+            // change color to show that we've injested the antivirus
+            if (this.antiVirusesTaken < 5)
+            {
+                ChangeColor(Color.blue);
+            }
+            // Overdose! More than 4 antiviruses taken
+            else
+            {
+                ChangeColor(Color.red); // change color to red signifying OD
+                StartCoroutine(DestroyAfterDelay(4.0f));
+            }
         }
 
         private IEnumerator DestroyAfterDelay(float delay)

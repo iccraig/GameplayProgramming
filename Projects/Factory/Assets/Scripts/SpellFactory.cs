@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace Arcanum
 {
-    public enum Spells { Fireball, BlackHole, Meteor, Humanoid, Virus}
+    public enum Spells { Fireball, BlackHole, Meteor, Humanoid, Virus, AntiVirus}
 
     [RequireComponent(typeof(BlackHoleMaker))]
     [RequireComponent(typeof(FireballMaker))]
     [RequireComponent(typeof(MeteorMaker))]
     [RequireComponent(typeof(HumanoidMaker))]
     [RequireComponent(typeof(VirusMaker))]
-
+    [RequireComponent(typeof(AntiVirusMaker))]
+                                          
     public class SpellFactory : MonoBehaviour
     {
 
@@ -42,6 +43,11 @@ namespace Arcanum
             {
                 var virus = this.GetComponent<VirusMaker>().Make();
                 virus.transform.position = this.transform.position;
+            } 
+            else if (Spells.AntiVirus == type)
+            {
+                var pill = this.GetComponent<AntiVirusMaker>().Make();
+                pill.transform.position = this.transform.position;
             }
         }
 
@@ -52,7 +58,7 @@ namespace Arcanum
                 //this.BuildSpell(Spells.BlackHole);
                 this.BuildSpell(Spells.Virus);
             }
-            else if(Input.GetButtonDown("Fire1"))
+            else if (Input.GetButtonDown("Fire1"))
             {
                 this.BuildSpell(Spells.Fireball);
             }
@@ -60,6 +66,10 @@ namespace Arcanum
             {
                 this.BuildSpell(Spells.Humanoid);
                 // this.BuildSpell(Spells.Meteor);
+            }
+            else if (Input.GetButtonDown("Fire3"))
+            {
+                this.BuildSpell(Spells.AntiVirus);
             }
         }
 

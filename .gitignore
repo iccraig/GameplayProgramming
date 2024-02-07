@@ -143,3 +143,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/vscode
 Projects/ADSR/.vscode/settings.json
 Projects/CommandPatternExample/.vscode/settings.json
+/Projects/Factory/.vsconfig
