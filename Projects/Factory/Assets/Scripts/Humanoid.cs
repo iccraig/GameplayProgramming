@@ -12,7 +12,6 @@ namespace Arcanum
         private float humanoidSize;
         private int antiVirusesTaken;
         private Vector3 moveDirection;
-        [SerializeField] private ParticleSystem explosionParticles;
 
 
         [SerializeField] private Color explosionColor = Color.green; // Color to change to on explosion
