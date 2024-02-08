@@ -17,12 +17,32 @@ namespace Arcanum
             rb.freezeRotation = true;
         }
 
+        // void FixedUpdate()
+        // {
+        //     // Calculate a random direction for movement
+        //     Vector3 randomDirection = Random.insideUnitSphere;
+        //     // Apply force in the random direction to make the black hole float around
+        //     rb.AddForce(randomDirection * moveSpeed);
+        // }
+
         void FixedUpdate()
         {
             // Calculate a random direction for movement
             Vector3 randomDirection = Random.insideUnitSphere;
-            // Apply force in the random direction to make the black hole float around
+
+            // Adjust the probability of moving downward (e.g., 80% chance)
+            if (Random.Range(0, 100) < 10)
+            {
+                // Move downward by setting the y-component of randomDirection to a negative value
+                randomDirection.y = -Mathf.Abs(randomDirection.y);
+            }
+
+            // Apply force in the modified random direction to make the virus float around
             rb.AddForce(randomDirection * moveSpeed);
+
+            // Limit the height of the virus by clamping its position on the y-axis
+            float maxHeight = 20.0f; // Adjust this value as needed
+            rb.position = new Vector3(rb.position.x, Mathf.Clamp(rb.position.y, -maxHeight, maxHeight), rb.position.z);
         }
 
         private void OnCollisionEnter(Collision collision)
